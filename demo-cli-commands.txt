@@ -1,0 +1,9 @@
+aws ec2 create-security-group --group-name EC2SecurityGroup --description "Security Group for EC2 instances to allow port 22"
+
+aws ec2 authorize-security-group-ingress --group-name EC2SecurityGroup --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+aws ec2 describe-security-groups --group-names EC2SecurityGroup
+
+aws ec2 run-instances --image-id ami-0245d318c6788de52 --key-name awsd-course-demos --security-groups EC2SecurityGroup --instance-type t2.micro --placement AvailabilityZone=us-west-1a --count 2
+
+aws ec2 terminate-instances --instance-ids <ids>
