@@ -1,9 +1,37 @@
-aws ec2 create-security-group --group-name EC2SecurityGroup --description "Security Group for EC2 instances to allow port 22"
+aws help > 01.txt
 
-aws ec2 authorize-security-group-ingress --group-name EC2SecurityGroup --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 help > 02.txt
 
-aws ec2 describe-security-groups --group-names EC2SecurityGroup
+aws ec2 describe-key-pairs help > 03.txt
 
-aws ec2 run-instances --image-id ami-0245d318c6788de52 --key-name awsd-course-demos --security-groups EC2SecurityGroup --instance-type t2.micro --placement AvailabilityZone=us-west-1a --count 2
+aws ec2 describe-key-pairs --dry-run
+
+aws ec2 describe-key-pairs --dry-run --profile zero-permissions
+
+aws ec2 describe-key-pairs --generate-cli-skeleton output
+
+aws ec2 describe-key-pairs
+
+aws ec2 create-key-pair help > 04.txt
+
+aws ec2 create-key-pair --key-name <name>
+
+aws ec2 create-key-pair --generate-cli-skeleton input > 05.json
+
+aws ec2 create-key-pair --cli-input-json file://05.json --no-dry-run
+
+aws ec2 create-key-pair --key-name <name> --query "KeyMaterial" --output text > 06.pem
+
+aws ec2 describe-security-groups > 07.json
+
+aws ec2 describe-security-groups --query "SecurityGroups[].[GroupId,GroupName,VpcId]" > 08.json
+
+aws ec2 describe-security-groups --query "SecurityGroups[].[GroupId,GroupName]" --filter "Name=vpc-id,Values=<ids>" --output table
+
+aws ec2 create-security-group --group-name <name> --description ""
+
+aws ec2 authorize-security-group-ingress --group-name <name> --protocol tcp --port 22 --cidr 0.0.0.0/0
+
+aws ec2 run-instances --image-id ami-0b69ea66ff7391e80 --key-name <name> --security-groups <name> --instance-type t2.micro --placement AvailabilityZone=<az> --count 1
 
 aws ec2 terminate-instances --instance-ids <ids>
