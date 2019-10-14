@@ -32,6 +32,12 @@ aws ec2 create-security-group --group-name <name> --description ""
 
 aws ec2 authorize-security-group-ingress --group-id <id> --protocol tcp --port 22 --cidr 0.0.0.0/0
 
-aws ec2 run-instances --image-id ami-0b69ea66ff7391e80 --key-name <name> --security-groups <name> --instance-type t2.micro --placement AvailabilityZone=<az> --count 1
+aws ec2 run-instances --image-id ami-0b69ea66ff7391e80 --key-name <name> --security-groups <name> --instance-type t2.micro --placement AvailabilityZone=<az> --count 1 --query "Intances[].InstanceId"
+
+aws ec2 describe-instances --generate-cli-skeleton output > 09.json
+
+aws ec2 describe-instances --query "Reservations[].Instances[].[PublicDnsName,PublicIpAddress]" --filter "Name=instance-id,Values=<id>"
+
+aws ec2 describe-instances --query "Reservations[].Instances[].InstanceId" --filter "Name=instance-state-name,Values=running"
 
 aws ec2 terminate-instances --instance-ids <ids>
